@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View
 {
+    var food = ["First Thing","Second Thing","Thired Thing","Fourth Thing", "Fifth Thing"]
     var body: some View
     {
         NavigationView
@@ -17,11 +18,11 @@ struct ContentView: View
        
         List
         {
-            Text("First Thing")
-            Text("Second Thing")
-            Text("Thired Thing")
-            Text("Fourth Thing")
-            Text("Fifth Thing")
+            ForEach(food, id: \.self)
+            {
+                thing in Text(thing)
+            }
+            
         }
         .navigationBarTitle("Food")
         }
