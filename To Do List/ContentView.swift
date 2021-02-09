@@ -40,3 +40,10 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+struct ToDoItem: Identifiable{
+    var id = UUID ()
+    var priority = String ()
+    var discription = String ()
+    var dueDate = Date ()
+}
