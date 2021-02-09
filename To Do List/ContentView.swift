@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View
 {
-    var food = ["First Thing","Second Thing","Thired Thing","Fourth Thing", "Fifth Thing"]
+   @State var food = ["First Thing","Second Thing","Thired Thing","Fourth Thing", "Fifth Thing"]
     var body: some View
     {
         NavigationView
@@ -22,9 +22,15 @@ struct ContentView: View
             {
                 thing in Text(thing)
             }
-            
+            .onMove(perform: { indices, newOffset in
+                food.move(fromOffsets: indices, toOffset: newOffset)
+            })
+            .onDelete(perform: { indexSet in
+                food.remove(atOffsets: indexSet)
+            })
         }
         .navigationBarTitle("Food")
+        .navigationBarItems(leading: EditButton())
         }
     }
 }
