@@ -24,7 +24,13 @@ struct ContentView: View
         {
             ForEach(toDoItems)
             {
-                thing in Text(thing.description)
+                thing in HStack
+                {
+                    VStack(alignment: .leading)
+                    {
+                        Text(thing.priority).font(.headline)
+                    }
+                }
             }
             .onMove(perform: { indices, newOffset in
                 toDoItems.move(fromOffsets: indices, toOffset: newOffset)
