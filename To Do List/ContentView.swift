@@ -9,7 +9,11 @@ import SwiftUI
 
 struct ContentView: View
 {
-   @State var food = ["First Thing","Second Thing","Thired Thing","Fourth Thing", "Fifth Thing"]
+    @State var toDoItems =
+
+            [ToDoItem(priority: "High", description: "Take out trash", dueDate: Date()), ToDoItem(priority: "Medium", description: "Pick up clothes", dueDate: Date()), ToDoItem(priority: "Low", description: "Eat a donut", dueDate: Date())]
+
+
     var body: some View
     {
         NavigationView
@@ -18,18 +22,18 @@ struct ContentView: View
        
         List
         {
-            ForEach(food, id: \.self)
+            ForEach(toDoItems)
             {
-                thing in Text(thing)
+                thing in Text(thing.description)
             }
             .onMove(perform: { indices, newOffset in
-                food.move(fromOffsets: indices, toOffset: newOffset)
+                toDoItems.move(fromOffsets: indices, toOffset: newOffset)
             })
             .onDelete(perform: { indexSet in
-                food.remove(atOffsets: indexSet)
+                toDoItems.remove(atOffsets: indexSet)
             })
         }
-        .navigationBarTitle("Food")
+        .navigationBarTitle("toDoList")
         .navigationBarItems(leading: EditButton())
         }
     }
@@ -44,6 +48,6 @@ struct ContentView_Previews: PreviewProvider {
 struct ToDoItem: Identifiable{
     var id = UUID ()
     var priority = String ()
-    var discription = String ()
+    var description = String ()
     var dueDate = Date ()
 }
