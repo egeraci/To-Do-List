@@ -29,7 +29,10 @@ struct ContentView: View
                     VStack(alignment: .leading)
                     {
                         Text(thing.priority).font(.headline)
+                        Text(thing.description)
                     }
+                    Spacer()
+                    Text(thing.dueDate, style: .date)
                 }
             }
             .onMove(perform: { indices, newOffset in
