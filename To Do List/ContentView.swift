@@ -9,11 +9,8 @@ import SwiftUI
 
 struct ContentView: View
 {
-    @State var toDoItems =
 
-            [ToDoItem(priority: "High", description: "Take out trash", dueDate: Date()), ToDoItem(priority: "Medium", description: "Pick up clothes", dueDate: Date()), ToDoItem(priority: "Low", description: "Eat a donut", dueDate: Date())]
-
-
+    @ObservedObject var toDoList = ToDoList()
     var body: some View
     {
         NavigationView
@@ -22,7 +19,7 @@ struct ContentView: View
        
         List
         {
-            ForEach(toDoItems)
+            ForEach(toDoList.items)
             {
                 thing in HStack
                 {
@@ -36,10 +33,10 @@ struct ContentView: View
                 }
             }
             .onMove(perform: { indices, newOffset in
-                toDoItems.move(fromOffsets: indices, toOffset: newOffset)
+                toDoList.items.move(fromOffsets: indices, toOffset: newOffset)
             })
             .onDelete(perform: { indexSet in
-                toDoItems.remove(atOffsets: indexSet)
+                toDoList.items.remove(atOffsets: indexSet)
             })
         }
         .navigationBarTitle("toDoList")
