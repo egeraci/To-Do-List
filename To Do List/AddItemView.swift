@@ -21,13 +21,11 @@ struct AddItemView: View {
             Form
             {
                 Picker("Priority", selection: $priority)
-                    {
-                    ForEach(Self.prioritys, id:\.self)
-                    {
-                        priority in
-                    Text(priority)
+                {
+                    ForEach(Self.prioritys, id:\.self) { priority in
+                        Text(priority)
                     }
-                    }
+                }
                 TextField("description", text: $description)
                 DatePicker("due Date",selection: $dueDate, displayedComponents: .date)
             }

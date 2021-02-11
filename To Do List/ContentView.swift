@@ -9,38 +9,45 @@ import SwiftUI
 
 struct ContentView: View
 {
-
     @ObservedObject var toDoList = ToDoList()
+    @State private var showingAddItemView = false
+    
     var body: some View
     {
         NavigationView
         {
-            
-       
-        List
-        {
-            ForEach(toDoList.items)
+            List
             {
-                thing in HStack
+                ForEach(toDoList.items)
                 {
-                    VStack(alignment: .leading)
+                    thing in HStack
                     {
-                        Text(thing.priority).font(.headline)
-                        Text(thing.description)
+                        VStack(alignment: .leading)
+                        {
+                            Text(thing.priority).font(.headline)
+                            Text(thing.description)
+                        }
+                        Spacer()
+                        Text(thing.dueDate, style: .date)
                     }
-                    Spacer()
-                    Text(thing.dueDate, style: .date)
                 }
+                .onMove(perform: { indices, newOffset in
+                    toDoList.items.move(fromOffsets: indices, toOffset: newOffset)
+                })
+                .onDelete(perform: { indexSet in
+                    toDoList.items.remove(atOffsets: indexSet)
+                })
             }
-            .onMove(perform: { indices, newOffset in
-                toDoList.items.move(fromOffsets: indices, toOffset: newOffset)
+            .sheet(isPresented: $showingAddItemView, content: {
+                AddItemView(toDoList: toDoList)
             })
-            .onDelete(perform: { indexSet in
-                toDoList.items.remove(atOffsets: indexSet)
-            })
-        }
-        .navigationBarTitle("toDoList")
-        .navigationBarItems(leading: EditButton())
+            .navigationBarTitle("toDoList")
+            .navigationBarItems(leading: EditButton(),
+                                trailing: Button(action: {
+                                    showingAddItemView = true}) {
+                                    Image(systemName: "plus")
+                                })
+            
         }
     }
 }
